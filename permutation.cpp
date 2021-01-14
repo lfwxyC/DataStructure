@@ -1,20 +1,20 @@
 #include<iostream>
 using namespace std;
 
-int value=0;//¼ÛÖµµÄ»ò 
-int permutation(int k,int m,int a[])//k:³õÊ¼ÖµÎª0£¬ÓÃÓÚ¼ÆÊı m:Êı×éÔªËØ¸öÊı a:ÊäÈëµÄÊı×é 
+int value=0;//ä»·å€¼çš„æˆ– 
+int permutation(int k,int m,int a[])//k:åˆå§‹å€¼ä¸º0ï¼Œç”¨äºè®¡æ•° m:æ•°ç»„å…ƒç´ ä¸ªæ•° a:è¾“å…¥çš„æ•°ç»„ 
 {
-	int sum=0;//¼ÛÖµ 
+	int sum=0;//ä»·å€¼ 
 	
-	if(k==m){//µÃµ½Ò»×éÈ«ÅÅÁĞ 
+	if(k==m){//å¾—åˆ°ä¸€ç»„å…¨æ’åˆ— 
 		for(int i=0;i<m;i++)
 			sum+=(i+1)^a[i];
 	}
-	else{//¼ÆËãÈ«ÅÅÁĞ 
+	else{//è®¡ç®—å…¨æ’åˆ— 
 		for(int i=k;i<m;i++){
 			swap(a[i],a[k]);
 			permutation(k+1,m,a);
-			swap(a[i],a[k]);//½»»»ºó»¹Ô­ 
+			swap(a[i],a[k]);//äº¤æ¢åè¿˜åŸ 
 		}
 	}
 	value|=sum;
