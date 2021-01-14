@@ -3,20 +3,20 @@ using namespace std;
 
 struct Student
 {
-	string name;//ĞÕÃû 
-	string phone;//µç»°ºÅÂë
-	int class_id;//°à¼¶
-	int dormitory;//ËŞÉá
+	string name;//å§“å 
+	string phone;//ç”µè¯å·ç 
+	int class_id;//ç­çº§
+	int dormitory;//å®¿èˆ
 };
 
 template<class T>
-void changeLength(T*& element,int oldLength,int newLength)//±¶ÔöÊı×é³¤¶È 
+void changeLength(T*& element,int oldLength,int newLength)//å€å¢æ•°ç»„é•¿åº¦ 
 {
-	T *temp=new T[newLength];//´´½¨ĞÂ³¤¶ÈµÄÊı×é 
+	T *temp=new T[newLength];//åˆ›å»ºæ–°é•¿åº¦çš„æ•°ç»„ 
 	
-	for(int i=0;i<oldLength;i++)//°Ñ¾ÉÊı×éµÄÔªËØ¸´ÖÆµ½ĞÂÊı×é
+	for(int i=0;i<oldLength;i++)//æŠŠæ—§æ•°ç»„çš„å…ƒç´ å¤åˆ¶åˆ°æ–°æ•°ç»„
 		temp[i]=element[i]; 
-	delete []element;//ÊÍ·Å¾ÉÊı×éµÄ¿Õ¼ä 
+	delete []element;//é‡Šæ”¾æ—§æ•°ç»„çš„ç©ºé—´ 
 	element=temp;
 }
 
@@ -27,18 +27,18 @@ public:
 	arrayList(int initialCapacity=5);
 	~arrayList(){delete []element;}
 	 
-	int indexOf(string name1)const;//¸ù¾İĞÕÃû»ñÈ¡Ë÷Òı 
-	void insert(T stu1);//²åÈë 
-	void erase(string name1);//¸ù¾İĞÕÃûÉ¾³ı 
-	void edit_phone(string name1,string phone1);//±à¼­µç»° 
-	void edit_cid(string name1,int cid);//±à¼­°à¼¶
-	void edit_dorm(string name1,int dorm);//±à¼­ËŞÉá 
-	void search(string name1);//¸ù¾İĞÕÃû²éÕÒ 
-	void output(int cid);//Êä³ö¸Ã°à¼¶µÄËùÓĞ³ÉÔ±µÄËŞÉáºÅµÄÒì»òÖµ 
+	int indexOf(string name1)const;//æ ¹æ®å§“åè·å–ç´¢å¼• 
+	void insert(T stu1);//æ’å…¥ 
+	void erase(string name1);//æ ¹æ®å§“ååˆ é™¤ 
+	void edit_phone(string name1,string phone1);//ç¼–è¾‘ç”µè¯ 
+	void edit_cid(string name1,int cid);//ç¼–è¾‘ç­çº§
+	void edit_dorm(string name1,int dorm);//ç¼–è¾‘å®¿èˆ 
+	void search(string name1);//æ ¹æ®å§“åæŸ¥æ‰¾ 
+	void output(int cid);//è¾“å‡ºè¯¥ç­çº§çš„æ‰€æœ‰æˆå‘˜çš„å®¿èˆå·çš„å¼‚æˆ–å€¼ 
 private:
 	T *element; 
-	int listSize;//ÏßĞÔ±í³¤¶È
-	int arrayLength;//Êı×éÈİÁ¿ 
+	int listSize;//çº¿æ€§è¡¨é•¿åº¦
+	int arrayLength;//æ•°ç»„å®¹é‡ 
 };
 
 template<class T>
@@ -46,7 +46,7 @@ arrayList<T>::arrayList(int initialCapacity)
 {
 	arrayLength=initialCapacity;
 	element=new T[arrayLength];
-	listSize=0;//³õÊ¼Ê±Ã»ÓĞÔªËØ 
+	listSize=0;//åˆå§‹æ—¶æ²¡æœ‰å…ƒç´  
 }
 
 template<class T>
@@ -55,19 +55,19 @@ int arrayList<T>::indexOf(string name1)const
 	for(int i=0;i<listSize;i++)
 		if(element[i].name==name1)
 			return i;
-	return -1;//Ã»ÓĞÕÒµ½ÔªËØ 
+	return -1;//æ²¡æœ‰æ‰¾åˆ°å…ƒç´  
 } 
 
 template<class T>
 void arrayList<T>::insert(T stu1)
 {
-	if(listSize==arrayLength)//Êı×éÒÑÂúÊ±±¶ÔöÊı×é 
+	if(listSize==arrayLength)//æ•°ç»„å·²æ»¡æ—¶å€å¢æ•°ç»„ 
 	{
 		changeLength<struct Student>(element,arrayLength,arrayLength*2);
 		arrayLength*=2;
 	}
 	element[listSize]=stu1;
-	listSize++;//ÏßĞÔ±í³¤¶È+1 
+	listSize++;//çº¿æ€§è¡¨é•¿åº¦+1 
 }
 
 template<class T>
@@ -76,13 +76,13 @@ void arrayList<T>::erase(string name1)
 	int theIndex=indexOf(name1);
 	for(int i=theIndex;i<listSize-1;i++)
 		element[i]=element[i+1];
-	element[--listSize].~T();//ÏßĞÔ±í³¤¶È-1	
+	element[--listSize].~T();//çº¿æ€§è¡¨é•¿åº¦-1	
 }
 
 template<class T>
 void arrayList<T>::edit_phone(string name1,string phone1)
 {
-	int theIndex=indexOf(name1);//¸ù¾İĞÕÃû²éÕÒË÷Òı 
+	int theIndex=indexOf(name1);//æ ¹æ®å§“åæŸ¥æ‰¾ç´¢å¼• 
 	element[theIndex].phone=phone1;
 }
 
@@ -103,9 +103,9 @@ template<class T>
 void arrayList<T>::search(string name1)
 {
 	int theIndex=indexOf(name1);
-	if(theIndex==-1)//Î´ÕÒµ½ÔªËØ 
+	if(theIndex==-1)//æœªæ‰¾åˆ°å…ƒç´  
 		cout<<"0"<<endl;
-	else//ÕÒµ½ÔªËØ 
+	else//æ‰¾åˆ°å…ƒç´  
 		cout<<"1"<<endl;
 }
 
@@ -115,20 +115,20 @@ void arrayList<T>::output(int cid)
 	int sum=0;
 	
 	for(int i=0;i<listSize;i++)
-		if(element[i].class_id==cid)//ÕÒµ½Ö¸¶¨°à¼¶ 
-			sum^=element[i].dormitory;//¼ÆËãÒì»òºÍ 
+		if(element[i].class_id==cid)//æ‰¾åˆ°æŒ‡å®šç­çº§ 
+			sum^=element[i].dormitory;//è®¡ç®—å¼‚æˆ–å’Œ 
 	cout<<sum<<endl;
 }
 
 template<class T>
-void addressBook(arrayList<T> &a)//¶ÔÍ¨Ñ¶Â¼½øĞĞ¹ÜÀí 
+void addressBook(arrayList<T> &a)//å¯¹é€šè®¯å½•è¿›è¡Œç®¡ç† 
 {
-	int m;//²Ù×÷Êı 
+	int m;//æ“ä½œæ•° 
 		
 	cin>>m;
 	switch(m)
 	{
-		case 0://²åÈë 
+		case 0://æ’å…¥ 
 			{
 			struct Student stu1;
 			
@@ -136,7 +136,7 @@ void addressBook(arrayList<T> &a)//¶ÔÍ¨Ñ¶Â¼½øĞĞ¹ÜÀí
 			a.insert(stu1);
 			break;
 			}
-		case 1://É¾³ı 
+		case 1://åˆ é™¤ 
 			{
 				string name1;
 			
@@ -144,15 +144,15 @@ void addressBook(arrayList<T> &a)//¶ÔÍ¨Ñ¶Â¼½øĞĞ¹ÜÀí
 			a.erase(name1);
 			break;
 			}
-		case 2://±à¼­ 
+		case 2://ç¼–è¾‘ 
 			{
 			string name1;
-			int k;//±à¼­ÏîÄ¿ 
+			int k;//ç¼–è¾‘é¡¹ç›® 
 			
 			cin>>name1>>k;
 			switch(k)
 			{
-				case 1://±à¼­µç»° 
+				case 1://ç¼–è¾‘ç”µè¯ 
 					{
 					string phone1;
 					
@@ -160,7 +160,7 @@ void addressBook(arrayList<T> &a)//¶ÔÍ¨Ñ¶Â¼½øĞĞ¹ÜÀí
 					a.edit_phone(name1,phone1);
 					break;
 					}					
-				case 2://±à¼­°à¼¶ 
+				case 2://ç¼–è¾‘ç­çº§ 
 					{
 					int cid;
 					
@@ -168,7 +168,7 @@ void addressBook(arrayList<T> &a)//¶ÔÍ¨Ñ¶Â¼½øĞĞ¹ÜÀí
 					a.edit_cid(name1,cid);
 					break;
 					}					
-				case 3://±à¼­ËŞÉá 
+				case 3://ç¼–è¾‘å®¿èˆ 
 					{
 					int dorm;
 					
@@ -179,7 +179,7 @@ void addressBook(arrayList<T> &a)//¶ÔÍ¨Ñ¶Â¼½øĞĞ¹ÜÀí
 			}
 			break;
 			}			
-		case 3://²éÕÒ 
+		case 3://æŸ¥æ‰¾ 
 			{
 			string name1;
 			
@@ -187,7 +187,7 @@ void addressBook(arrayList<T> &a)//¶ÔÍ¨Ñ¶Â¼½øĞĞ¹ÜÀí
 			a.search(name1);
 			break;
 			}			
-		case 4://Êä³öÒì»òºÍ 
+		case 4://è¾“å‡ºå¼‚æˆ–å’Œ 
 			{
 			int cid;
 			
@@ -200,7 +200,7 @@ void addressBook(arrayList<T> &a)//¶ÔÍ¨Ñ¶Â¼½øĞĞ¹ÜÀí
 
 int main()
 {
-	int n;//²Ù×÷ÊıÄ¿ 
+	int n;//æ“ä½œæ•°ç›® 
 	arrayList<struct Student> a;
 	
 	cin>>n;
