@@ -2,12 +2,12 @@
 using namespace std;
 
 template<class T>
-struct binaryTreeNode//¶ş²æÊ÷½Úµã 
+struct binaryTreeNode//äºŒå‰æ ‘èŠ‚ç‚¹ 
 {
-	T element;//ÊıÖµ 
-	binaryTreeNode<T> *leftChild,*rightChild;//×óÓÒº¢×Ó 
+	T element;//æ•°å€¼ 
+	binaryTreeNode<T> *leftChild,*rightChild;//å·¦å³å­©å­ 
 	
-	//¹¹Ôìº¯Êı 
+	//æ„é€ å‡½æ•° 
 	binaryTreeNode(){leftChild=rightChild=NULL;}
 	binaryTreeNode(const T& theElement)
 	{
@@ -23,23 +23,23 @@ struct binaryTreeNode//¶ş²æÊ÷½Úµã
 };
 
 template<class E>
-class linkedBinaryTree//¶ş²æÊ÷ 
+class linkedBinaryTree//äºŒå‰æ ‘ 
 {
 public:
 	linkedBinaryTree(){root=NULL;treeSize=0;}
 	~linkedBinaryTree(){erase();}
 	
-	void erase(){postOrder(dispose);root=NULL;}//É¾³ı 
-	void postOrder(void(*theVisit)(binaryTreeNode<E>*)){visit=theVisit;postOrder(root);}//ºóĞò±éÀú
+	void erase(){postOrder(dispose);root=NULL;}//åˆ é™¤ 
+	void postOrder(void(*theVisit)(binaryTreeNode<E>*)){visit=theVisit;postOrder(root);}//ååºéå†
 	void makeTree(const E&,linkedBinaryTree<E>&,linkedBinaryTree<E>&); 
 private:
-	binaryTreeNode<E> *root;//¸ù½Úµã 
-	int treeSize;//½Úµã¸öÊı 
+	binaryTreeNode<E> *root;//æ ¹èŠ‚ç‚¹ 
+	int treeSize;//èŠ‚ç‚¹ä¸ªæ•° 
 
 	static void (*visit)(binaryTreeNode<E>*);
-	static void postOrder(binaryTreeNode<E> *t);//ºóĞò±éÀú 
-	static void dispose(binaryTreeNode<E> *t){delete t;}//É¾³ı 
-	static int height(binaryTreeNode<E> *t);//¼ÆËã×ÓÊ÷¸ß¶È 
+	static void postOrder(binaryTreeNode<E> *t);//ååºéå† 
+	static void dispose(binaryTreeNode<E> *t){delete t;}//åˆ é™¤ 
+	static int height(binaryTreeNode<E> *t);//è®¡ç®—å­æ ‘é«˜åº¦ 
 };
 
 
@@ -47,7 +47,7 @@ template<class E>
 void (*linkedBinaryTree<E>::visit)(binaryTreeNode<E>*);
 
 template<class E>
-void linkedBinaryTree<E>::postOrder(binaryTreeNode<E> *t)//ºóĞò±éÀú 
+void linkedBinaryTree<E>::postOrder(binaryTreeNode<E> *t)//ååºéå† 
 {
 	if(t!=NULL)
 	{
@@ -68,14 +68,14 @@ void linkedBinaryTree<E>::makeTree(const E& element,linkedBinaryTree<E>& left,li
 }
 
 template<class T>
-void changeLength1D(T*& element, int oldLength, int newLength)//±¶ÔöÊı×é³¤¶È 
+void changeLength1D(T*& element, int oldLength, int newLength)//å€å¢æ•°ç»„é•¿åº¦ 
 {
-	T* temp = new T[newLength];//´´½¨ĞÂ³¤¶ÈµÄÊı×é 
+	T* temp = new T[newLength];//åˆ›å»ºæ–°é•¿åº¦çš„æ•°ç»„ 
 
 	//copy(element + 1, element + oldLength, temp+1);
-	for (int i = 1; i < oldLength; i++)//°Ñ¾ÉÊı×éµÄÔªËØ¸´ÖÆµ½ĞÂÊı×é
+	for (int i = 1; i < oldLength; i++)//æŠŠæ—§æ•°ç»„çš„å…ƒç´ å¤åˆ¶åˆ°æ–°æ•°ç»„
 		temp[i] = element[i];
-	delete[]element;//ÊÍ·Å¾ÉÊı×éµÄ¿Õ¼ä 
+	delete[]element;//é‡Šæ”¾æ—§æ•°ç»„çš„ç©ºé—´ 
 	element = temp;
 }
 
