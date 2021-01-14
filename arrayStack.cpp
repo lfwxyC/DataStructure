@@ -6,8 +6,8 @@ template<class T>
 class arrayStack
 {
 public:
-	arrayStack(int initialCapacity = 10);//¹¹Ôìº¯Êı 
-	~arrayStack() { delete[] stack; }//Îö¹¹º¯Êı 
+	arrayStack(int initialCapacity = 10);//æ„é€ å‡½æ•° 
+	~arrayStack() { delete[] stack; }//ææ„å‡½æ•° 
 	bool empty() const { return stackTop == -1; }
 	int size() const { return stackTop + 1; }
 	T& top() {
@@ -19,7 +19,7 @@ public:
 	{
 		if (stackTop == -1)
 			exit(1);
-		stack[stackTop--].~T();//TµÄÎö¹¹º¯Êı 
+		stack[stackTop--].~T();//Tçš„ææ„å‡½æ•° 
 	}
 	void push(const T& theElement);
 private:
@@ -27,7 +27,7 @@ private:
 	int stackLength;
 	T* stack;
 };
-//¹¹Ôìº¯Êı 
+//æ„é€ å‡½æ•° 
 template<class T>
 arrayStack<T>::arrayStack(int initialCapacity)
 {
@@ -39,9 +39,9 @@ arrayStack<T>::arrayStack(int initialCapacity)
 }
 template<class T>
 void arrayStack<T>::push(const T& theElement)
-{//½«ÔªËØtheElementÑ¹ÈëÕ» 
+{//å°†å…ƒç´ theElementå‹å…¥æ ˆ 
 	if (stackTop == stackLength - 1) {//judge if the capacity is full
-		stackLength *= 2;      //½«Õ»µÄÈİÁ¿À©³ä¶ş±¶ 
+		stackLength *= 2;      //å°†æ ˆçš„å®¹é‡æ‰©å……äºŒå€ 
 		T *newStack=new T[stackLength];
 		for (int i = 0;i < stackLength;i++)
 		{
@@ -83,7 +83,7 @@ void compute(arrayStack<double>& number, arrayStack<char>& opr)
 void operate(string& str)
 {
 	arrayStack<double> number;
-	arrayStack<char> opr;//ÔËËã·ûºÅ
+	arrayStack<char> opr;//è¿ç®—ç¬¦å·
 
 	for (int j = 0;j < (int)str.length();j++)
 	{
