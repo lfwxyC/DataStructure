@@ -2,12 +2,12 @@
 using namespace std;
 
 template<class T>
-struct node//Á´±í½Úµã 
+struct node//é“¾è¡¨èŠ‚ç‚¹ 
 {
-	T element;//Öµ 
-	node *next;//Ö¸Õë 
+	T element;//å€¼ 
+	node *next;//æŒ‡é’ˆ 
 	
-	//¹¹Ôìº¯Êı 
+	//æ„é€ å‡½æ•° 
 	node(){}
 	node(const T& theElement,node<T> *theNext)
 	{
@@ -17,47 +17,47 @@ struct node//Á´±í½Úµã
 };
 
 template<class T>
-class sortedChain//ÓĞĞòÁ´±í 
+class sortedChain//æœ‰åºé“¾è¡¨ 
 {
 public:
 	sortedChain();
 	~sortedChain(){}
 	
-	void find(const T& x)const;//²éÕÒ 
-	void insert(const T& x);//²åÈë 
-	void erase(const T& x);	//É¾³ı 
-	int getSize()const{return size;}//»ñÈ¡Á´±í³¤¶È 
+	void find(const T& x)const;//æŸ¥æ‰¾ 
+	void insert(const T& x);//æ’å…¥ 
+	void erase(const T& x);	//åˆ é™¤ 
+	int getSize()const{return size;}//è·å–é“¾è¡¨é•¿åº¦ 
 protected:
-	node<T> *firstNode;//Í·½Úµã 
-	int size;//Á´±í³¤¶È 
+	node<T> *firstNode;//å¤´èŠ‚ç‚¹ 
+	int size;//é“¾è¡¨é•¿åº¦ 
 };
 
 template<class T>
-sortedChain<T>::sortedChain()//¹¹Ôìº¯Êı 
+sortedChain<T>::sortedChain()//æ„é€ å‡½æ•° 
 {
 	firstNode=NULL;
 	size=0;
 }
 
 template<class T>
-void sortedChain<T>::find(const T& x)const//²éÕÒ 
+void sortedChain<T>::find(const T& x)const//æŸ¥æ‰¾ 
 {
 	node<T> *currentNode=firstNode;
 	
 	while(currentNode!=NULL&&currentNode->element!=x)
 		currentNode=currentNode->next;
 	
-	if(currentNode!=NULL)//ÕÒµ½ÁË 
+	if(currentNode!=NULL)//æ‰¾åˆ°äº† 
 		cout<<size<<endl;
 	
-	else//Î´ÕÒµ½ 
+	else//æœªæ‰¾åˆ° 
 		cout<<"Not Found"<<endl;
 } 
 
 template<class T>
-void sortedChain<T>::insert(const T& x)//²åÈë 
+void sortedChain<T>::insert(const T& x)//æ’å…¥ 
 {
-	node<T> *p=firstNode,*tp=NULL;//tpÓÃÓÚ¼ÇÂ¼pµÄÎ»ÖÃ 
+	node<T> *p=firstNode,*tp=NULL;//tpç”¨äºè®°å½•pçš„ä½ç½® 
 	
 	while(p!=NULL&&p->element<x)
 	{
@@ -65,28 +65,28 @@ void sortedChain<T>::insert(const T& x)//²åÈë
 		p=p->next;
 	}
 	
-	if(p!=NULL&&p->element==x)//ÔªËØÒÑ´æÔÚ 
+	if(p!=NULL&&p->element==x)//å…ƒç´ å·²å­˜åœ¨ 
 	{
 		cout<<"Existed"<<endl;
 		return;
 	}
 	
-	//ÔªËØ²»´æÔÚ 
+	//å…ƒç´ ä¸å­˜åœ¨ 
 	node<T> *newNode=new node<T>(x,p);
 	
-	if(tp==NULL)//²åÈëÍ·½Úµã 
+	if(tp==NULL)//æ’å…¥å¤´èŠ‚ç‚¹ 
 		firstNode=newNode;
 	
-	else//²åÈëÆäËû½Úµã 
+	else//æ’å…¥å…¶ä»–èŠ‚ç‚¹ 
 		tp->next=newNode;
 	
 	size++;
 }
 
 template<class T>
-void sortedChain<T>::erase(const T& x)//É¾³ı 
+void sortedChain<T>::erase(const T& x)//åˆ é™¤ 
 {
-	node<T> *p=firstNode,*tp=NULL;//tpÓÃÓÚ¼ÇÂ¼pµÄÎ»ÖÃ 
+	node<T> *p=firstNode,*tp=NULL;//tpç”¨äºè®°å½•pçš„ä½ç½® 
 	
 	while(p!=NULL&&p->element<x)
 	{
@@ -94,12 +94,12 @@ void sortedChain<T>::erase(const T& x)//É¾³ı
 		p=p->next;
 	}
 	
-	if(p!=NULL&&p->element==x)//ÔªËØ´æÔÚ 
+	if(p!=NULL&&p->element==x)//å…ƒç´ å­˜åœ¨ 
 	{
-		if(tp==NULL)//É¾³ıÍ·½Úµã 
+		if(tp==NULL)//åˆ é™¤å¤´èŠ‚ç‚¹ 
 			firstNode=p->next;
 		
-		else//É¾³ıÆäËû½Úµã 
+		else//åˆ é™¤å…¶ä»–èŠ‚ç‚¹ 
 			tp->next=p->next;
 		
 		delete p;
@@ -107,27 +107,27 @@ void sortedChain<T>::erase(const T& x)//É¾³ı
 		cout<<size<<endl;
 	}
 	
-	else//ÔªËØ²»´æÔÚ 
+	else//å…ƒç´ ä¸å­˜åœ¨ 
 		cout<<"Delete Failed"<<endl;
 }
 
 template<class T>
-class hashChains//Á´±íÉ¢ÁĞ 
+class hashChains//é“¾è¡¨æ•£åˆ— 
 {
 public:
 	hashChains(int theDivisor=11);
 	~hashChains(){delete[]table;}
 	
-	void find(const T& x)const{table[x%divisor].find(x);}//²éÕÒ 
-	void insert(const T& x){table[x%divisor].insert(x);}//²åÈë 
-	void erase(const T& x){table[x%divisor].erase(x);}//É¾³ı 
+	void find(const T& x)const{table[x%divisor].find(x);}//æŸ¥æ‰¾ 
+	void insert(const T& x){table[x%divisor].insert(x);}//æ’å…¥ 
+	void erase(const T& x){table[x%divisor].erase(x);}//åˆ é™¤ 
 protected:
-	sortedChain<T> *table;//É¢ÁĞ±í 
-	int divisor;//³ıÊı 
+	sortedChain<T> *table;//æ•£åˆ—è¡¨ 
+	int divisor;//é™¤æ•° 
 };
 
 template<class T>
-hashChains<T>::hashChains(int theDivisor)//¹¹Ôìº¯Êı 
+hashChains<T>::hashChains(int theDivisor)//æ„é€ å‡½æ•° 
 {
 	divisor=theDivisor;
 	table=new sortedChain<T>[divisor];
