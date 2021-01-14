@@ -3,12 +3,12 @@
 using namespace std;
 
 template<class T>
-struct chainNode//Á´±í½áµã 
+struct chainNode//é“¾è¡¨ç»“ç‚¹ 
 {
-	T element;//ÔªËØÖµ 
-	chainNode *next;//Ö¸ÏòÏÂÒ»¸ö½áµã 
+	T element;//å…ƒç´ å€¼ 
+	chainNode *next;//æŒ‡å‘ä¸‹ä¸€ä¸ªç»“ç‚¹ 
 	
-	chainNode(const T& element,chainNode<T> *next)//¹¹Ôìº¯Êı 
+	chainNode(const T& element,chainNode<T> *next)//æ„é€ å‡½æ•° 
 	{
 		this->element=element;
 		this->next=next;
@@ -18,33 +18,33 @@ struct chainNode//Á´±í½áµã
 class linkedGraph;
 
 template<class T>
-class graphChain//Í¼Á´±í 
+class graphChain//å›¾é“¾è¡¨ 
 {
 public:
 	graphChain(int initialCapacity=10);
 	~graphChain();
 	
-	void insert(const T& theElement);//²åÈë 
-	void erase(int theIndex);//°´Ë÷ÒıÉ¾³ı 
-	int indexOf(const T& theElement);//»ñÈ¡Ë÷Òı 
-	int size()const{return listSize;}//»ñÈ¡Á´±í³¤¶È 
-	void eraseElement(int theVertex);//°´ÔªËØÖµÉ¾³ı 
+	void insert(const T& theElement);//æ’å…¥ 
+	void erase(int theIndex);//æŒ‰ç´¢å¼•åˆ é™¤ 
+	int indexOf(const T& theElement);//è·å–ç´¢å¼• 
+	int size()const{return listSize;}//è·å–é“¾è¡¨é•¿åº¦ 
+	void eraseElement(int theVertex);//æŒ‰å…ƒç´ å€¼åˆ é™¤ 
 	
 	friend linkedGraph;
 protected:
-	chainNode<T> *firstNode;//Í·½áµã 
-	int listSize;//Á´±í³¤¶È 
+	chainNode<T> *firstNode;//å¤´ç»“ç‚¹ 
+	int listSize;//é“¾è¡¨é•¿åº¦ 
 };
 
 template<class T>
-graphChain<T>::graphChain(int initialCapacity)//¹¹Ôìº¯Êı 
+graphChain<T>::graphChain(int initialCapacity)//æ„é€ å‡½æ•° 
 {
 	firstNode=NULL;
 	listSize=0;
 }
 
 template<class T>
-graphChain<T>::~graphChain()//É¾³ıÁ´±íÖĞµÄËùÓĞ½áµã 
+graphChain<T>::~graphChain()//åˆ é™¤é“¾è¡¨ä¸­çš„æ‰€æœ‰ç»“ç‚¹ 
 {
 	while(firstNode!=NULL)
 	{
@@ -55,11 +55,11 @@ graphChain<T>::~graphChain()//É¾³ıÁ´±íÖĞµÄËùÓĞ½áµã
 }
 
 template<class T>
-void graphChain<T>::insert(const T& theElement)//²åÈë 
+void graphChain<T>::insert(const T& theElement)//æ’å…¥ 
 {
 	chainNode<T> *p=firstNode,*pp=NULL;
 	
-	//°´ÉıĞò²åÈë 
+	//æŒ‰å‡åºæ’å…¥ 
 	while(p!=NULL&&theElement>p->element)
 	{
 		pp=p;
@@ -69,23 +69,23 @@ void graphChain<T>::insert(const T& theElement)//²åÈë
 	if(pp!=NULL)
 		pp->next=new chainNode<T>(theElement,pp->next);
 	
-	else//²åÈëÍ·½Úµã 
+	else//æ’å…¥å¤´èŠ‚ç‚¹ 
 		firstNode=new chainNode<T>(theElement,firstNode);
 	
 	listSize++;
 }
 
 template<class T>
-void graphChain<T>::erase(int theIndex)//°´Ë÷ÒıÉ¾³ı 
+void graphChain<T>::erase(int theIndex)//æŒ‰ç´¢å¼•åˆ é™¤ 
 {
 	chainNode<T> *deleteNode;
 	
-	if(theIndex==0)//É¾³ıÍ·½áµã 
+	if(theIndex==0)//åˆ é™¤å¤´ç»“ç‚¹ 
 	{
 		deleteNode=firstNode;
 		firstNode=firstNode->next;
 	}
-	else//É¾³ıÆäËûÎ»ÖÃµÄ½áµã 
+	else//åˆ é™¤å…¶ä»–ä½ç½®çš„ç»“ç‚¹ 
 	{
 		chainNode<T> *p=firstNode;
 		for(int i=0;i<theIndex-1;i++)
@@ -99,7 +99,7 @@ void graphChain<T>::erase(int theIndex)//°´Ë÷ÒıÉ¾³ı
 }
 
 template<class T>
-int graphChain<T>::indexOf(const T& theElement)//»ñÈ¡Ë÷Òı 
+int graphChain<T>::indexOf(const T& theElement)//è·å–ç´¢å¼• 
 {
 	int index=0;
 	chainNode<T> *p=firstNode;
@@ -109,57 +109,57 @@ int graphChain<T>::indexOf(const T& theElement)//»ñÈ¡Ë÷Òı
 		p=p->next;
 		index++;
 	}
-	if(p==NULL)//ÈôÎ´ÕÒµ½Ôò·µ»Ø-1 
+	if(p==NULL)//è‹¥æœªæ‰¾åˆ°åˆ™è¿”å›-1 
 		return -1;
 	else
 		return index;
 }
 
 template<class T>
-void graphChain<T>::eraseElement(int theVertex)//°´ÔªËØÖµÉ¾³ı 
+void graphChain<T>::eraseElement(int theVertex)//æŒ‰å…ƒç´ å€¼åˆ é™¤ 
 {
 	int index=indexOf(theVertex);
 	erase(index);
 }
 
 template<class T>
-class arrayQueue//Ñ­»·¶ÓÁĞÀà 
+class arrayQueue//å¾ªç¯é˜Ÿåˆ—ç±» 
 {
 public:
 	arrayQueue(int initialCapacity=10);
 	~arrayQueue(){delete[]queue;}
 	
-	bool empty()const{return queueFront==queueBack;}//ÅĞ¶Ï¶ÓÁĞÊÇ·ñÎª¿Õ 
-	void push(const T& theElement);//²åÈëµ½¶ÓÎ² 
-	void pop();//É¾³ı¶ÓÊ×ÔªËØ 
-	int size()const{return (arrayLength+queueBack-queueFront)%arrayLength;}//»ñÈ¡¶ÓÁĞ³¤¶È 
-	T& front()const{return queue[(queueFront+1)%arrayLength];}//»ñÈ¡¶ÓÊ×ÔªËØ 
+	bool empty()const{return queueFront==queueBack;}//åˆ¤æ–­é˜Ÿåˆ—æ˜¯å¦ä¸ºç©º 
+	void push(const T& theElement);//æ’å…¥åˆ°é˜Ÿå°¾ 
+	void pop();//åˆ é™¤é˜Ÿé¦–å…ƒç´  
+	int size()const{return (arrayLength+queueBack-queueFront)%arrayLength;}//è·å–é˜Ÿåˆ—é•¿åº¦ 
+	T& front()const{return queue[(queueFront+1)%arrayLength];}//è·å–é˜Ÿé¦–å…ƒç´  
 private:
-	int queueFront;//Ö¸Ïò¶ÓÊ×ÔªËØÄæÊ±ÕëµÄÏÂÒ»¸ö 
-	int queueBack;//Ö¸Ïò¶ÓÎ²ÔªËØ 
-	int arrayLength;//Êı×éÈİÁ¿ 
-	T *queue;//Ö¸Ïò¶ÓÁĞµÄÊı×é 
+	int queueFront;//æŒ‡å‘é˜Ÿé¦–å…ƒç´ é€†æ—¶é’ˆçš„ä¸‹ä¸€ä¸ª 
+	int queueBack;//æŒ‡å‘é˜Ÿå°¾å…ƒç´  
+	int arrayLength;//æ•°ç»„å®¹é‡ 
+	T *queue;//æŒ‡å‘é˜Ÿåˆ—çš„æ•°ç»„ 
 };
 
 template<class T>
-arrayQueue<T>::arrayQueue(int initialCapacity)//¹¹Ôìº¯Êı 
+arrayQueue<T>::arrayQueue(int initialCapacity)//æ„é€ å‡½æ•° 
 {
 	arrayLength=initialCapacity;
 	queue=new T[arrayLength];
-	queueFront=queueBack=0;//´Ó1¿ªÊ¼´æ·ÅÔªËØ 
+	queueFront=queueBack=0;//ä»1å¼€å§‹å­˜æ”¾å…ƒç´  
 }
 
 template<class T>
-void arrayQueue<T>::push(const T& theElement)//²åÈë 
+void arrayQueue<T>::push(const T& theElement)//æ’å…¥ 
 {
-	if(queueFront==(queueBack+1)%arrayLength)//Êı×éÒÑÂú£¬±¶ÔöÊı×é³¤¶È 
+	if(queueFront==(queueBack+1)%arrayLength)//æ•°ç»„å·²æ»¡ï¼Œå€å¢æ•°ç»„é•¿åº¦ 
 	{
 		T *newQueue=new T[arrayLength*2];
-		int start=(queueFront+1)%arrayLength;//Ö¸Ïò¶ÓÊ×ÔªËØ 
+		int start=(queueFront+1)%arrayLength;//æŒ‡å‘é˜Ÿé¦–å…ƒç´  
 		
-		if(start<2)//Î´ĞÎ³É»· 
+		if(start<2)//æœªå½¢æˆç¯ 
 		{ 
-			int j=0;//newQueueÖĞµÄÔªËØ´Ó0¿ªÊ¼´æ·Å 
+			int j=0;//newQueueä¸­çš„å…ƒç´ ä»0å¼€å§‹å­˜æ”¾ 
 			
 			for(int i=start;i<=queueBack;i++)
 			{
@@ -167,9 +167,9 @@ void arrayQueue<T>::push(const T& theElement)//²åÈë
 				j++;
 			}
 		} 
-		else//ĞÎ³É»·£¬·Ö¿ª¸´ÖÆ 
+		else//å½¢æˆç¯ï¼Œåˆ†å¼€å¤åˆ¶ 
 		{
-			int j=0;//¼ÇÂ¼newQueueÊı×éÖĞÔªËØµÄÎ»ÖÃ 
+			int j=0;//è®°å½•newQueueæ•°ç»„ä¸­å…ƒç´ çš„ä½ç½® 
 			
 			for(int i=start;i<arrayLength;i++)
 			{
@@ -182,7 +182,7 @@ void arrayQueue<T>::push(const T& theElement)//²åÈë
 				j++;
 			}
 		}
-		queueFront=arrayLength*2-1;//ĞÂÊı×é´Ó0¿ªÊ¼´æ·ÅÔªËØ 
+		queueFront=arrayLength*2-1;//æ–°æ•°ç»„ä»0å¼€å§‹å­˜æ”¾å…ƒç´  
 		queueBack=arrayLength-2; 
 		arrayLength*=2;
 		delete[]queue;
@@ -194,63 +194,63 @@ void arrayQueue<T>::push(const T& theElement)//²åÈë
 }
 
 template<class T>
-void arrayQueue<T>::pop()//É¾³ı 
+void arrayQueue<T>::pop()//åˆ é™¤ 
 {
 	queueFront=(queueFront+1)%arrayLength; 
 	queue[queueFront].~T();
 }
 
-class edge//±ß 
+class edge//è¾¹ 
 {
 public:
 	edge(int i,int j);
 	
-	int vertex1()const{return v1;}//»ñÈ¡¶¥µã1 
-	int vertex2()const{return v2;}//»ñÈ¡¶¥µã2 
+	int vertex1()const{return v1;}//è·å–é¡¶ç‚¹1 
+	int vertex2()const{return v2;}//è·å–é¡¶ç‚¹2 
 private:
-	int v1;//¶¥µã1 
-	int v2;//¶¥µã2 
+	int v1;//é¡¶ç‚¹1 
+	int v2;//é¡¶ç‚¹2 
 };
 
-edge::edge(int i,int j)//¹¹Ôìº¯Êı 
+edge::edge(int i,int j)//æ„é€ å‡½æ•° 
 {
 	v1=i;
 	v2=j;
 }
 
-class linkedGraph//ÎŞÏò·Ç¼ÓÈ¨Í¼ 
+class linkedGraph//æ— å‘éåŠ æƒå›¾ 
 {
 protected:
-	int n;//¶¥µãÊı 
-	int e;//±ßÊı 
-	graphChain<int> *aList;//ÁÚ½ÓÁ´±í 
+	int n;//é¡¶ç‚¹æ•° 
+	int e;//è¾¹æ•° 
+	graphChain<int> *aList;//é‚»æ¥é“¾è¡¨ 
 public:
 	linkedGraph(int numberOfVertices=0);
 	~linkedGraph();
 	
-	void insertEdge(edge *theEdge);//²åÈë±ß 
-	void eraseEdge(int i,int j);//É¾³ı±ß 
-	int numberOfVertices()const{return n;}//»ñÈ¡¶¥µã¸öÊı 
+	void insertEdge(edge *theEdge);//æ’å…¥è¾¹ 
+	void eraseEdge(int i,int j);//åˆ é™¤è¾¹ 
+	int numberOfVertices()const{return n;}//è·å–é¡¶ç‚¹ä¸ªæ•° 
 	
 	void bfs(int v,int reach[],int label);//bfs
 	void dfs(int v,int reach[],int label);//dfs
-	void rDfs(int v);//dfsµÄµİ¹é·½·¨ 
+	void rDfs(int v);//dfsçš„é€’å½’æ–¹æ³• 
 	
-	void findPath(int theSource,int theDestination);//Ñ°ÕÒ×î¶ÌÂ·¾¶ 
-	int labelComponents();//¹¹¼ş±ê¼Ç 
-	void outputComponents();//ÉıĞòÊä³öËùÓĞÁ¬Í¨×ÓÍ¼ÖĞ×îĞ¡µãµÄ±àºÅ
-	void outputBfs(int v);//Êä³öbfsĞòÁĞ³¤¶ÈºÍ×ÖµäĞò×îĞ¡µÄĞòÁĞ 
-	void outputDfs(int v);//Êä³ödfsĞòÁĞ³¤¶ÈºÍ×ÖµäĞò×îĞ¡µÄĞòÁĞ 
+	void findPath(int theSource,int theDestination);//å¯»æ‰¾æœ€çŸ­è·¯å¾„ 
+	int labelComponents();//æ„ä»¶æ ‡è®° 
+	void outputComponents();//å‡åºè¾“å‡ºæ‰€æœ‰è¿é€šå­å›¾ä¸­æœ€å°ç‚¹çš„ç¼–å·
+	void outputBfs(int v);//è¾“å‡ºbfsåºåˆ—é•¿åº¦å’Œå­—å…¸åºæœ€å°çš„åºåˆ— 
+	void outputDfs(int v);//è¾“å‡ºdfsåºåˆ—é•¿åº¦å’Œå­—å…¸åºæœ€å°çš„åºåˆ— 
 	
-	class myIterator//µü´úÆ÷ 
+	class myIterator//è¿­ä»£å™¨ 
 	{
 	public:
-		myIterator(chainNode<int> *theNode)//¹¹Ôìº¯Êı 
+		myIterator(chainNode<int> *theNode)//æ„é€ å‡½æ•° 
 		{
 			node=theNode;
 		}	
 		
-		int next()//·µ»ØÏÂÒ»¸ö¶¥µã 
+		int next()//è¿”å›ä¸‹ä¸€ä¸ªé¡¶ç‚¹ 
 		{
 			if(node!=NULL)
 			{
@@ -260,7 +260,7 @@ public:
 				return theElement;
 			}
 			
-			else//²»´æÔÚ 
+			else//ä¸å­˜åœ¨ 
 				return 0;
 		}
 	protected:
@@ -268,15 +268,15 @@ public:
 	};
 	myIterator* iterator(int theVertex){return new myIterator(aList[theVertex].firstNode);}
 private:
-	int *reach;//±ê¼Ç¶¥µãÊÇ·ñ±»·ÃÎÊ 
-	int label;//¹¹¼ş¸öÊı 
-	int length;//ĞòÁĞ³¤¶È 
-	int *c;//±ê¼Ç¹¹¼ş 
-	int *bfsArray;//bfsĞòÁĞ 
-	int *dfsArray;//dfsĞòÁĞ 
+	int *reach;//æ ‡è®°é¡¶ç‚¹æ˜¯å¦è¢«è®¿é—® 
+	int label;//æ„ä»¶ä¸ªæ•° 
+	int length;//åºåˆ—é•¿åº¦ 
+	int *c;//æ ‡è®°æ„ä»¶ 
+	int *bfsArray;//bfsåºåˆ— 
+	int *dfsArray;//dfsåºåˆ— 
 };
 
-linkedGraph::linkedGraph(int numberOfVertices)//¹¹Ôìº¯Êı 
+linkedGraph::linkedGraph(int numberOfVertices)//æ„é€ å‡½æ•° 
 {
 	n=numberOfVertices;
 	e=0;
@@ -288,7 +288,7 @@ linkedGraph::linkedGraph(int numberOfVertices)//¹¹Ôìº¯Êı
 	reach=new int[n+1];
 }
 
-linkedGraph::~linkedGraph()//Îö¹¹º¯Êı 
+linkedGraph::~linkedGraph()//ææ„å‡½æ•° 
 {
 	delete[]aList;
 	delete[]c;
@@ -297,7 +297,7 @@ linkedGraph::~linkedGraph()//Îö¹¹º¯Êı
 	delete[]reach;
 }
 
-void linkedGraph::insertEdge(edge *theEdge)//²åÈë±ß 
+void linkedGraph::insertEdge(edge *theEdge)//æ’å…¥è¾¹ 
 {
 	int v1=theEdge->vertex1();
 	int v2=theEdge->vertex2();
@@ -310,7 +310,7 @@ void linkedGraph::insertEdge(edge *theEdge)//²åÈë±ß
 	}
 }
 
-void linkedGraph::eraseEdge(int i,int j)//É¾³ı±ß 
+void linkedGraph::eraseEdge(int i,int j)//åˆ é™¤è¾¹ 
 {
 	if(i>=1&&j>=1&&i<=n&&j<=n)
 	{
@@ -324,8 +324,8 @@ void linkedGraph::bfs(int v,int reach[],int label)//bfs
 {
 	arrayQueue<int> q;
 	
-	reach[v]=label;//µ½´ï¶¥µãv 
-	length=1;//³õÊ¼ĞòÁĞ³¤¶È 
+	reach[v]=label;//åˆ°è¾¾é¡¶ç‚¹v 
+	length=1;//åˆå§‹åºåˆ—é•¿åº¦ 
 	bfsArray[1]=v; 
 	q.push(v);
 	
@@ -335,7 +335,7 @@ void linkedGraph::bfs(int v,int reach[],int label)//bfs
 		q.pop();
 		
 		for(chainNode<int>* u=aList[w].firstNode;u!=NULL;u=u->next)
-			if(reach[u->element]==0)//¶¥µãuÎ´±»·ÃÎÊ 
+			if(reach[u->element]==0)//é¡¶ç‚¹uæœªè¢«è®¿é—® 
 			{
 				q.push(u->element);
 				reach[u->element]=label;
@@ -353,7 +353,7 @@ void linkedGraph::dfs(int v,int reach[],int label)//dfs
 	rDfs(v);
 }
 
-void linkedGraph::rDfs(int v)//dfsµÄµİ¹éÊµÏÖ 
+void linkedGraph::rDfs(int v)//dfsçš„é€’å½’å®ç° 
 {
 	reach[v]=label;
 	length++;
@@ -368,19 +368,19 @@ void linkedGraph::rDfs(int v)//dfsµÄµİ¹éÊµÏÖ
 	delete iv;
 }
 
-void linkedGraph::findPath(int theSource,int theDestination)//Ñ°ÕÒ×î¶ÌÂ·¾¶ 
+void linkedGraph::findPath(int theSource,int theDestination)//å¯»æ‰¾æœ€çŸ­è·¯å¾„ 
 {
 	arrayQueue<int> q;
-	int *size=new int[n+1];//bfs²ã´Î´óĞ¡ 
+	int *size=new int[n+1];//bfså±‚æ¬¡å¤§å° 
 	int index=2,count=0;
-	bool find=false;//±ê¼ÇÊÇ·ñÕÒµ½ 
+	bool find=false;//æ ‡è®°æ˜¯å¦æ‰¾åˆ° 
 	
 	for(int i=1;i<=n;i++)
 		reach[i]=0;
 	
 	reach[theSource]=label;
 	q.push(theSource);
-	size[1]=1;//µÚÒ»²ãÖ»ÓĞtheSourceÒ»¸ö¶¥µã 
+	size[1]=1;//ç¬¬ä¸€å±‚åªæœ‰theSourceä¸€ä¸ªé¡¶ç‚¹ 
 	
 	for(int i=2;i<=n;i++)
 		size[i]=0;
@@ -389,9 +389,9 @@ void linkedGraph::findPath(int theSource,int theDestination)//Ñ°ÕÒ×î¶ÌÂ·¾¶
 	{
 		int w=q.front();
 		q.pop();
-		count++;//¼ÇÂ¼Ã¿Ò»²ãÒÑ·ÃÎÊµÄ¶¥µã¸öÊı 
+		count++;//è®°å½•æ¯ä¸€å±‚å·²è®¿é—®çš„é¡¶ç‚¹ä¸ªæ•° 
 		
-		if(w==theDestination)//ÕÒµ½ÖÕµã 
+		if(w==theDestination)//æ‰¾åˆ°ç»ˆç‚¹ 
 		{
 			cout<<index-2<<endl;
 			find=true;
@@ -403,21 +403,21 @@ void linkedGraph::findPath(int theSource,int theDestination)//Ñ°ÕÒ×î¶ÌÂ·¾¶
 			{
 				q.push(u->element);
 				reach[u->element]=label;
-				size[index]++;//¼ÆËãÃ¿Ò»²ãµÄÈ«²¿¶¥µã¸öÊı 
+				size[index]++;//è®¡ç®—æ¯ä¸€å±‚çš„å…¨éƒ¨é¡¶ç‚¹ä¸ªæ•° 
 			}
 		
-		if(count==size[index-1])//½øÈëÏÂÒ»²ã 
+		if(count==size[index-1])//è¿›å…¥ä¸‹ä¸€å±‚ 
 		{
 			count=0;
 			index++;
 		}
 	}
 	
-	if(!find)//Â·¾¶²»´æÔÚ 
+	if(!find)//è·¯å¾„ä¸å­˜åœ¨ 
 		cout<<-1<<endl;
 }
 
-int linkedGraph::labelComponents()//±ê¼Ç¹¹¼ş 
+int linkedGraph::labelComponents()//æ ‡è®°æ„ä»¶ 
 {
 	int n=numberOfVertices();
 	
@@ -436,7 +436,7 @@ int linkedGraph::labelComponents()//±ê¼Ç¹¹¼ş
 	return label;
 }
 
-void linkedGraph::outputComponents()//ÉıĞòÊä³öËùÓĞÁ¬Í¨×ÓÍ¼ÖĞ×îĞ¡µãµÄ±àºÅ
+void linkedGraph::outputComponents()//å‡åºè¾“å‡ºæ‰€æœ‰è¿é€šå­å›¾ä¸­æœ€å°ç‚¹çš„ç¼–å·
 {
 	int count=1;
 	
@@ -453,21 +453,21 @@ void linkedGraph::outputComponents()//ÉıĞòÊä³öËùÓĞÁ¬Í¨×ÓÍ¼ÖĞ×îĞ¡µãµÄ±àºÅ
 		}
 }
 
-void linkedGraph::outputBfs(int v)//Êä³öbfsĞòÁĞ³¤¶ÈºÍ×ÖµäĞò×îĞ¡µÄĞòÁĞ 
+void linkedGraph::outputBfs(int v)//è¾“å‡ºbfsåºåˆ—é•¿åº¦å’Œå­—å…¸åºæœ€å°çš„åºåˆ— 
 {
 	for(int i=1;i<=n;i++)
 		reach[i]=0;
 	
 	bfs(v,reach,1);
-	cout<<length<<endl;//Êä³öbfsĞòÁĞ³¤¶È 
+	cout<<length<<endl;//è¾“å‡ºbfsåºåˆ—é•¿åº¦ 
 	
 	for(int i=1;i<=length;i++)
-		cout<<bfsArray[i]<<" ";//Êä³öbfsĞòÁĞ 
+		cout<<bfsArray[i]<<" ";//è¾“å‡ºbfsåºåˆ— 
 	
 	cout<<endl;
 }
 
-void linkedGraph::outputDfs(int v)//Êä³ödfsĞòÁĞ³¤¶ÈºÍ×ÖµäĞò×îĞ¡µÄĞòÁĞ 
+void linkedGraph::outputDfs(int v)//è¾“å‡ºdfsåºåˆ—é•¿åº¦å’Œå­—å…¸åºæœ€å°çš„åºåˆ— 
 {
 	for(int i=0;i<=n;i++)
 		reach[i]=0;
@@ -483,7 +483,7 @@ void linkedGraph::outputDfs(int v)//Êä³ödfsĞòÁĞ³¤¶ÈºÍ×ÖµäĞò×îĞ¡µÄĞòÁĞ
 
 int main()
 {
-	int n,m,s,t;//¶¥µã¸öÊı£¬²Ù×÷¸öÊı£¬Æğµã£¬ÖÕµã 
+	int n,m,s,t;//é¡¶ç‚¹ä¸ªæ•°ï¼Œæ“ä½œä¸ªæ•°ï¼Œèµ·ç‚¹ï¼Œç»ˆç‚¹ 
 	
 	cin>>n>>m>>s>>t;
 	linkedGraph graph(n);
@@ -495,11 +495,11 @@ int main()
 		cin>>opt>>u>>v;
 		edge *theEdge=new edge(u,v);
 		
-		if(opt==0)//²åÈë±ß 
+		if(opt==0)//æ’å…¥è¾¹ 
 		{
 			graph.insertEdge(theEdge);
 		}
-		else//É¾³ı±ß 
+		else//åˆ é™¤è¾¹ 
 		{
 			graph.eraseEdge(u,v);
 		}
