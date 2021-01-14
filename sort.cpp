@@ -7,18 +7,18 @@ class mySort
 public:
 	mySort(T a[],int n);
 	~mySort(){delete []p;}
-	void rank();//Ãû´ÎÅÅĞò
-	void selectionSort();//¼°Ê±ÖÕÖ¹µÄÑ¡ÔñÅÅĞò
-	void bubbleSort();//¼°Ê±ÖÕÖ¹µÄÃ°ÅİÅÅĞò
-	void insertSort();//²åÈëÅÅĞò 
-	void output();//Êä³öÅÅºÃĞòµÄÊı×é 
+	void rank();//åæ¬¡æ’åº
+	void selectionSort();//åŠæ—¶ç»ˆæ­¢çš„é€‰æ‹©æ’åº
+	void bubbleSort();//åŠæ—¶ç»ˆæ­¢çš„å†’æ³¡æ’åº
+	void insertSort();//æ’å…¥æ’åº 
+	void output();//è¾“å‡ºæ’å¥½åºçš„æ•°ç»„ 
 private:
-	T *p;//Ö¸ÏòÅÅĞòÊı×é  
-	int n;//Êı×é³¤¶È		
+	T *p;//æŒ‡å‘æ’åºæ•°ç»„  
+	int n;//æ•°ç»„é•¿åº¦		
 };
 
 template<class T>
-mySort<T>::mySort(T a[],int n):n(n)//¹¹Ôìº¯Êı 
+mySort<T>::mySort(T a[],int n):n(n)//æ„é€ å‡½æ•° 
 {
 	p=new T [n];
 	
@@ -29,27 +29,27 @@ mySort<T>::mySort(T a[],int n):n(n)//¹¹Ôìº¯Êı
 }
 
 template<class T>
-void mySort<T>::rank()//Ãû´ÎÅÅĞò
+void mySort<T>::rank()//åæ¬¡æ’åº
 {
-	T *r=new T[n];//´´½¨¼ÆËãÃû´ÎµÄÊı×é 
+	T *r=new T[n];//åˆ›å»ºè®¡ç®—åæ¬¡çš„æ•°ç»„ 
 	
-	//³õÊ¼»¯r
+	//åˆå§‹åŒ–r
 	for(int i=0;i<n;i++)
 		r[i]=0;
 		
-	//¼ÆËãÃû´Î 
+	//è®¡ç®—åæ¬¡ 
 	for(int i=1;i<n;i++)
 		for(int j=0;j<i;j++)
 		{
-			if(p[i]>=p[j])//p[i]ÓëÆä×ó±ßµÄÔªËØ±È½Ï 
+			if(p[i]>=p[j])//p[i]ä¸å…¶å·¦è¾¹çš„å…ƒç´ æ¯”è¾ƒ 
 				r[i]++;
 			else
 				r[j]++;
 		}
 			
-	T *u=new T[n];//´´½¨¸½¼ÓÊı×é
+	T *u=new T[n];//åˆ›å»ºé™„åŠ æ•°ç»„
 		 
-	//°´Ãû´ÎÅÅĞò 
+	//æŒ‰åæ¬¡æ’åº 
 	for(int i=0;i<n;i++)
 		u[r[i]]=p[i];
 	for(int i=0;i<n;i++)
@@ -59,18 +59,18 @@ void mySort<T>::rank()//Ãû´ÎÅÅĞò
 }
 
 template<class T>
-void mySort<T>::selectionSort()//¼°Ê±ÖÕÖ¹µÄÑ¡ÔñÅÅĞò
+void mySort<T>::selectionSort()//åŠæ—¶ç»ˆæ­¢çš„é€‰æ‹©æ’åº
 {
-	bool sorted=false;//³õÊ¼Ê±Î´ÅÅºÃĞò 
+	bool sorted=false;//åˆå§‹æ—¶æœªæ’å¥½åº 
 	
-	for(int i=n;(i>1)&&(!sorted);i--)//ÈôÊı×éÒÑ¾­ÅÅºÃĞòÔòÑ­»·Í£Ö¹ 
+	for(int i=n;(i>1)&&(!sorted);i--)//è‹¥æ•°ç»„å·²ç»æ’å¥½åºåˆ™å¾ªç¯åœæ­¢ 
 	{
 		int indexOfMax=0;
-		sorted=true;//¼ÙÉèÒÑ¾­ÅÅºÃĞò 
+		sorted=true;//å‡è®¾å·²ç»æ’å¥½åº 
 		
 		for(int j=1;j<i;j++)
 		{
-			if(p[indexOfMax]<p[j])//ÈôÃ¿Ò»¸öÔªËØ¾ùĞ¡ÓÚÆäºóÒ»¸ö£¬ÔòÊı×éÓĞĞò 
+			if(p[indexOfMax]<p[j])//è‹¥æ¯ä¸€ä¸ªå…ƒç´ å‡å°äºå…¶åä¸€ä¸ªï¼Œåˆ™æ•°ç»„æœ‰åº 
 				indexOfMax=j;
 			else
 				sorted=false;
@@ -80,13 +80,13 @@ void mySort<T>::selectionSort()//¼°Ê±ÖÕÖ¹µÄÑ¡ÔñÅÅĞò
 }
 
 template<class T>
-void mySort<T>::bubbleSort()//¼°Ê±ÖÕÖ¹µÄÃ°ÅİÅÅĞò
+void mySort<T>::bubbleSort()//åŠæ—¶ç»ˆæ­¢çš„å†’æ³¡æ’åº
 {
 	bool swapped=true;
 	
 	for(int i=0;(i<n-1)&&(swapped);i++)
 	{
-		swapped=false;//³õÊ¼Ê±Ã»ÓĞ½øĞĞ½»»» 
+		swapped=false;//åˆå§‹æ—¶æ²¡æœ‰è¿›è¡Œäº¤æ¢ 
 		
 		for(int j=0;j<n-i-1;j++)
 			if(p[j]>p[j+1])
@@ -98,21 +98,21 @@ void mySort<T>::bubbleSort()//¼°Ê±ÖÕÖ¹µÄÃ°ÅİÅÅĞò
 }
 
 template<class T>
-void mySort<T>::insertSort()//²åÈëÅÅĞò
+void mySort<T>::insertSort()//æ’å…¥æ’åº
 {
 	for(int i=1;i<n;i++)
 	{
 		T t=p[i];
 		int j;
 		
-		for(j=i-1;j>=0&&t<p[j];j--)//´ÓºóÍùÇ°ÕÒ£¬µ±ÔªËØ±ÈtĞ¡Ê±Í£Ö¹ 
+		for(j=i-1;j>=0&&t<p[j];j--)//ä»åå¾€å‰æ‰¾ï¼Œå½“å…ƒç´ æ¯”tå°æ—¶åœæ­¢ 
 			p[j+1]=p[j];
 		p[j+1]=t;		
 	}	
 }
 
 template<class T>
-void mySort<T>::output()//Êä³öÅÅºÃĞòµÄÊı×é
+void mySort<T>::output()//è¾“å‡ºæ’å¥½åºçš„æ•°ç»„
 {
 	for(int i=0;i<n;i++)
 		cout<<p[i]<<" ";
