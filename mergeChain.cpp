@@ -2,12 +2,12 @@
 using namespace std;
 
 template<class T>
-struct chainNode//Á´±í½áµã 
+struct chainNode//é“¾è¡¨ç»“ç‚¹ 
 {
-	T element;//ÔªËØÖµ 
-	chainNode *next;//Ö¸ÏòÏÂÒ»¸ö½áµã 
+	T element;//å…ƒç´ å€¼ 
+	chainNode *next;//æŒ‡å‘ä¸‹ä¸€ä¸ªç»“ç‚¹ 
 	
-	chainNode(const T& element,chainNode<T> *next)//¹¹Ôìº¯Êı 
+	chainNode(const T& element,chainNode<T> *next)//æ„é€ å‡½æ•° 
 	{
 		this->element=element;
 		this->next=next;
@@ -23,18 +23,18 @@ public:
 	
 	void insert(int theIndex,const T& theElement);	
 	void erase(const T& theElement);
-	void reverse();//Ô­µØÄæÖÃÁ´±í
+	void reverse();//åŸåœ°é€†ç½®é“¾è¡¨
 	int indexOf(const T& theElement);
-	int output();//Êä³öË÷ÒıÓëÔªËØµÄÒì»òºÍ
-	T& get(int theIndex)const;//¸ù¾İË÷Òı»ñÈ¡ÔªËØÖµ 
-	void merge(chain<T>& a,chain<T>& b);//ºÏ²¢a,bµÃµ½ÓĞĞòÁ´±í
+	int output();//è¾“å‡ºç´¢å¼•ä¸å…ƒç´ çš„å¼‚æˆ–å’Œ
+	T& get(int theIndex)const;//æ ¹æ®ç´¢å¼•è·å–å…ƒç´ å€¼ 
+	void merge(chain<T>& a,chain<T>& b);//åˆå¹¶a,bå¾—åˆ°æœ‰åºé“¾è¡¨
 	
-	class iterator;//Á´±íµü´úÆ÷ 
+	class iterator;//é“¾è¡¨è¿­ä»£å™¨ 
 	iterator begin(){return iterator(firstNode);}
 	iterator end(){return iterator(NULL);} 
 protected:
-	chainNode<T> *firstNode;//Í·½áµã 
-	int listSize;//Á´±í³¤¶È 
+	chainNode<T> *firstNode;//å¤´ç»“ç‚¹ 
+	int listSize;//é“¾è¡¨é•¿åº¦ 
 };
 
 template<class T>
@@ -75,7 +75,7 @@ chain<T>::chain(int initialCapacity)
 }
 
 template<class T>
-chain<T>::~chain()//É¾³ıÁ´±íÖĞµÄËùÓĞ½áµã 
+chain<T>::~chain()//åˆ é™¤é“¾è¡¨ä¸­çš„æ‰€æœ‰ç»“ç‚¹ 
 {
 	while(firstNode!=NULL)
 	{
@@ -88,9 +88,9 @@ chain<T>::~chain()//É¾³ıÁ´±íÖĞµÄËùÓĞ½áµã
 template<class T>
 void chain<T>::insert(int theIndex,const T& theElement) 
 {
-	if(theIndex==0)//²åÈëÍ·½áµã 
+	if(theIndex==0)//æ’å…¥å¤´ç»“ç‚¹ 
 		firstNode=new chainNode<T>(theElement,firstNode);
-	else//²åÈëÆäËûÎ»ÖÃµÄ½áµã 
+	else//æ’å…¥å…¶ä»–ä½ç½®çš„ç»“ç‚¹ 
 	{
 		chainNode<T> *p=firstNode;
 		
@@ -112,12 +112,12 @@ void chain<T>::erase(const T& theElement)
 		cout<<-1<<endl;
 		return ;
 	}
-	else if(theIndex==0)//É¾³ıÍ·½áµã 
+	else if(theIndex==0)//åˆ é™¤å¤´ç»“ç‚¹ 
 	{
 		deleteNode=firstNode;
 		firstNode=firstNode->next;
 	}
-	else//É¾³ıÆäËûÎ»ÖÃµÄ½áµã 
+	else//åˆ é™¤å…¶ä»–ä½ç½®çš„ç»“ç‚¹ 
 	{
 		chainNode<T> *p=firstNode->next;
 		for(int i=0;i<theIndex-1;i++)
@@ -139,15 +139,15 @@ void chain<T>::reverse()
 	
 	while(r!=NULL)
 	{
-		q->next=p;//ÈÃµ±Ç°½áµãÖ¸ÏòÆäÇ°Ò»¸ö½áµã 
-		//Èı¸ö½áµãÏòºóÒÆ¶¯Ò»¸ö 
+		q->next=p;//è®©å½“å‰ç»“ç‚¹æŒ‡å‘å…¶å‰ä¸€ä¸ªç»“ç‚¹ 
+		//ä¸‰ä¸ªç»“ç‚¹å‘åç§»åŠ¨ä¸€ä¸ª 
 		p=q;
 		q=r;
 		r=r->next;
 	}
 	q->next=p;
 	p=q;
-	firstNode->next=NULL;//Í·½áµã±ä³ÉÎ²½áµã 
+	firstNode->next=NULL;//å¤´ç»“ç‚¹å˜æˆå°¾ç»“ç‚¹ 
 	firstNode=p; 
 }
 
@@ -162,7 +162,7 @@ int chain<T>::indexOf(const T& theElement)
 		p=p->next;
 		index++;
 	}
-	if(p==NULL)//ÈôÎ´ÕÒµ½Ôò·µ»Ø-1 
+	if(p==NULL)//è‹¥æœªæ‰¾åˆ°åˆ™è¿”å›-1 
 		return -1;
 	else
 		return index;
@@ -171,7 +171,7 @@ int chain<T>::indexOf(const T& theElement)
 template<class T>
 int chain<T>::output()
 {
-	int sum=0,index=0;//sum:Òì»òÖµÖ®ºÍ£¬index:Ë÷Òı 
+	int sum=0,index=0;//sum:å¼‚æˆ–å€¼ä¹‹å’Œï¼Œindex:ç´¢å¼• 
 	
 	for(iterator p=begin();p!=end();p++)
 	{
@@ -226,23 +226,23 @@ void chain<T>::merge(chain<T>& a,chain<T>& b)
 }
 
 template<class T>
-void createChain(chain<T>& c,int n)//´´½¨ÓĞĞòÁ´±í 
+void createChain(chain<T>& c,int n)//åˆ›å»ºæœ‰åºé“¾è¡¨ 
 {
-	int x;//¼üÅÌÊäÈë»ñµÃÁ´±íÔªËØÖµ 
+	int x;//é”®ç›˜è¾“å…¥è·å¾—é“¾è¡¨å…ƒç´ å€¼ 
 	
 	for(int i=0;i<n;i++)
 	{
 		cin>>x;
-		if(i)//Á´±í²»Îª¿Õ 
+		if(i)//é“¾è¡¨ä¸ä¸ºç©º 
 		{
 			int j=0;
 			
-			while(j<i&&x>=c.get(j))//µ±xĞ¡ÓÚÁ´±íÔªËØ»òÒÑ¾­±éÀúÖÁÎ²½áµãÊ±Í£Ö¹Ñ­»· 
+			while(j<i&&x>=c.get(j))//å½“xå°äºé“¾è¡¨å…ƒç´ æˆ–å·²ç»éå†è‡³å°¾ç»“ç‚¹æ—¶åœæ­¢å¾ªç¯ 
 				j++;
 			c.insert(j,x);
 		}
 		else
-			c.insert(0,x);//°ÑµÚÒ»¸öÔªËØÖµ²åÈëµ½Á´±íÍ·½áµã 
+			c.insert(0,x);//æŠŠç¬¬ä¸€ä¸ªå…ƒç´ å€¼æ’å…¥åˆ°é“¾è¡¨å¤´ç»“ç‚¹ 
 	}
 }
 
