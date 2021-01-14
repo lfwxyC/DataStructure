@@ -2,47 +2,47 @@
 using namespace std;
 
 template<class T>
-class arrayQueue//Ñ­»·¶ÓÁĞÀà 
+class arrayQueue//å¾ªç¯é˜Ÿåˆ—ç±» 
 {
 public:
 	arrayQueue(int initialCapacity=10);
 	~arrayQueue(){delete[]queue;}
 	
 	bool empty(){return queueFront==queueBack;}
-	void push(const T& theElement);//²åÈëµ½¶ÓÎ² 
-	void pop();//É¾³ı¶ÓÊ×ÔªËØ 
-	T& front()const{return queue[(queueFront+1)%arrayLength];}//»ñÈ¡¶ÓÊ×ÔªËØ 
+	void push(const T& theElement);//æ’å…¥åˆ°é˜Ÿå°¾ 
+	void pop();//åˆ é™¤é˜Ÿé¦–å…ƒç´  
+	T& front()const{return queue[(queueFront+1)%arrayLength];}//è·å–é˜Ÿé¦–å…ƒç´  
 private:
-	int queueFront;//Ö¸Ïò¶ÓÊ×ÔªËØÄæÊ±ÕëµÄÏÂÒ»¸ö 
-	int queueBack;//Ö¸Ïò¶ÓÎ²ÔªËØ 
-	int arrayLength;//Êı×éÈİÁ¿ 
-	T *queue;//Ö¸Ïò¶ÓÁĞµÄÊı×é 
+	int queueFront;//æŒ‡å‘é˜Ÿé¦–å…ƒç´ é€†æ—¶é’ˆçš„ä¸‹ä¸€ä¸ª 
+	int queueBack;//æŒ‡å‘é˜Ÿå°¾å…ƒç´  
+	int arrayLength;//æ•°ç»„å®¹é‡ 
+	T *queue;//æŒ‡å‘é˜Ÿåˆ—çš„æ•°ç»„ 
 };
 
 template<class T>
-arrayQueue<T>::arrayQueue(int initialCapacity)//¹¹Ôìº¯Êı 
+arrayQueue<T>::arrayQueue(int initialCapacity)//æ„é€ å‡½æ•° 
 {
 	arrayLength=initialCapacity;
 	queue=new T[arrayLength];
-	queueFront=queueBack=0;//´Ó1¿ªÊ¼´æ·ÅÔªËØ 
+	queueFront=queueBack=0;//ä»1å¼€å§‹å­˜æ”¾å…ƒç´  
 }
 
 template<class T>
-void arrayQueue<T>::push(const T& theElement)//²åÈë 
+void arrayQueue<T>::push(const T& theElement)//æ’å…¥ 
 {
-	if(queueFront==(queueBack+1)%arrayLength)//Êı×éÒÑÂú£¬±¶ÔöÊı×é³¤¶È 
+	if(queueFront==(queueBack+1)%arrayLength)//æ•°ç»„å·²æ»¡ï¼Œå€å¢æ•°ç»„é•¿åº¦ 
 	{
 		T *newQueue=new T[arrayLength*2];
-		int start=(queueFront+1)%arrayLength;//Ö¸Ïò¶ÓÊ×ÔªËØ 
+		int start=(queueFront+1)%arrayLength;//æŒ‡å‘é˜Ÿé¦–å…ƒç´  
 		
-		if(start<2)//Î´ĞÎ³É»· 
+		if(start<2)//æœªå½¢æˆç¯ 
 		{ 
 			for(int i=start;i<=queueBack;i++)
 				newQueue[i]=queue[i];
 		} 
-		else//ĞÎ³É»·£¬·Ö¿ª¸´ÖÆ 
+		else//å½¢æˆç¯ï¼Œåˆ†å¼€å¤åˆ¶ 
 		{
-			int j=0;//¼ÇÂ¼newQueueÊı×éÖĞÔªËØµÄÎ»ÖÃ 
+			int j=0;//è®°å½•newQueueæ•°ç»„ä¸­å…ƒç´ çš„ä½ç½® 
 			
 			for(int i=start;i<arrayLength;i++)
 			{
@@ -55,7 +55,7 @@ void arrayQueue<T>::push(const T& theElement)//²åÈë
 				j++;
 			}
 		}
-		queueFront=arrayLength*2-1;//ĞÂÊı×é´Ó0¿ªÊ¼´æ·ÅÔªËØ 
+		queueFront=arrayLength*2-1;//æ–°æ•°ç»„ä»0å¼€å§‹å­˜æ”¾å…ƒç´  
 		queueBack=arrayLength-2; 
 		arrayLength*=2;
 		delete[]queue;
@@ -67,19 +67,19 @@ void arrayQueue<T>::push(const T& theElement)//²åÈë
 }
 
 template<class T>
-void arrayQueue<T>::pop()//É¾³ı 
+void arrayQueue<T>::pop()//åˆ é™¤ 
 {
 	queueFront=(queueFront+1)%arrayLength; 
 	queue[queueFront].~T();
 }
 
 template<class T>
-struct binaryTreeNode//¶ş²æÊ÷½Úµã 
+struct binaryTreeNode//äºŒå‰æ ‘èŠ‚ç‚¹ 
 {
-	T element;//ÊıÖµ 
-	binaryTreeNode<T> *leftChild,*rightChild;//×óÓÒº¢×Ó 
+	T element;//æ•°å€¼ 
+	binaryTreeNode<T> *leftChild,*rightChild;//å·¦å³å­©å­ 
 	
-	//¹¹Ôìº¯Êı 
+	//æ„é€ å‡½æ•° 
 	binaryTreeNode(){leftChild=rightChild=NULL;}
 	binaryTreeNode(const T& theElement)
 	{
@@ -95,36 +95,36 @@ struct binaryTreeNode//¶ş²æÊ÷½Úµã
 };
 
 template<class E>
-class linkedBinaryTree//¶ş²æÊ÷ 
+class linkedBinaryTree//äºŒå‰æ ‘ 
 {
 public:
 	linkedBinaryTree(){root=NULL;treeSize=0;}
 	~linkedBinaryTree(){erase();}
 	
-	void postOrder(void(*theVisit)(binaryTreeNode<E>*)){visit=theVisit;postOrder(root);}//ºóĞò±éÀú 
-	void levelOrder();//²ã´Î±éÀúÊä³ö 
-	void erase(){postOrder(dispose);root=NULL;}//É¾³ı 
-	void createTree();//´´½¨Ê÷ 
-	void size();//Êä³ö¸÷×ÓÊ÷´óĞ¡ 
-	void height();//Êä³ö¸÷×ÓÊ÷¸ß¶È 
+	void postOrder(void(*theVisit)(binaryTreeNode<E>*)){visit=theVisit;postOrder(root);}//ååºéå† 
+	void levelOrder();//å±‚æ¬¡éå†è¾“å‡º 
+	void erase(){postOrder(dispose);root=NULL;}//åˆ é™¤ 
+	void createTree();//åˆ›å»ºæ ‘ 
+	void size();//è¾“å‡ºå„å­æ ‘å¤§å° 
+	void height();//è¾“å‡ºå„å­æ ‘é«˜åº¦ 
 private:
-	binaryTreeNode<E> *root;//¸ù½Úµã 
-	int treeSize;//½Úµã¸öÊı 
-	int *sizeArray;//´æ·Å¸÷×ÓÊ÷´óĞ¡ 
-	int *heightArray;//´æ·Å¸÷×ÓÊ÷¸ß¶È 
+	binaryTreeNode<E> *root;//æ ¹èŠ‚ç‚¹ 
+	int treeSize;//èŠ‚ç‚¹ä¸ªæ•° 
+	int *sizeArray;//å­˜æ”¾å„å­æ ‘å¤§å° 
+	int *heightArray;//å­˜æ”¾å„å­æ ‘é«˜åº¦ 
 	
 	static void (*visit)(binaryTreeNode<E>*);
-	static void postOrder(binaryTreeNode<E> *t);//ºóĞò±éÀú 
-	static void dispose(binaryTreeNode<E> *t){delete t;}//É¾³ı 
-	static int size(binaryTreeNode<E> *t);//¼ÆËã×ÓÊ÷´óĞ¡ 
-	static int height(binaryTreeNode<E> *t);//¼ÆËã×ÓÊ÷¸ß¶È 
+	static void postOrder(binaryTreeNode<E> *t);//ååºéå† 
+	static void dispose(binaryTreeNode<E> *t){delete t;}//åˆ é™¤ 
+	static int size(binaryTreeNode<E> *t);//è®¡ç®—å­æ ‘å¤§å° 
+	static int height(binaryTreeNode<E> *t);//è®¡ç®—å­æ ‘é«˜åº¦ 
 };
 
 template<class E>
 void (*linkedBinaryTree<E>::visit)(binaryTreeNode<E>*);
 
 template<class E>
-void linkedBinaryTree<E>::postOrder(binaryTreeNode<E> *t)//ºóĞò±éÀú 
+void linkedBinaryTree<E>::postOrder(binaryTreeNode<E> *t)//ååºéå† 
 {
 	if(t!=NULL)
 	{
@@ -135,14 +135,14 @@ void linkedBinaryTree<E>::postOrder(binaryTreeNode<E> *t)//ºóĞò±éÀú
 }
 
 template<class E>
-void linkedBinaryTree<E>::levelOrder()//²ã´Î±éÀúÊä³ö 
+void linkedBinaryTree<E>::levelOrder()//å±‚æ¬¡éå†è¾“å‡º 
 {
-	arrayQueue<binaryTreeNode<E>*> q;//´æ·Å½Úµã 
+	arrayQueue<binaryTreeNode<E>*> q;//å­˜æ”¾èŠ‚ç‚¹ 
 	binaryTreeNode<E> *t=root;
 	
 	while(t!=NULL)
 	{
-		cout<<t->element<<" ";//Êä³ö½Úµã 
+		cout<<t->element<<" ";//è¾“å‡ºèŠ‚ç‚¹ 
 		
 		if(t->leftChild!=NULL)
 		{
@@ -165,19 +165,19 @@ void linkedBinaryTree<E>::levelOrder()//²ã´Î±éÀúÊä³ö
 }
 
 template<class E>
-void linkedBinaryTree<E>::createTree()//´´½¨Ê÷ 
+void linkedBinaryTree<E>::createTree()//åˆ›å»ºæ ‘ 
 {
-	int n;//½Úµã¸öÊı 
+	int n;//èŠ‚ç‚¹ä¸ªæ•° 
 	
 	cin>>n;
-	root=new binaryTreeNode<E>(1);//¸ù½ÚµãÎª1 
-	binaryTreeNode<E>* a[n*2];//°´±àºÅ´æ·Å½Úµã 
-	a[0]=root;//¸ù½Úµã·ÅÈëÊı×é 
+	root=new binaryTreeNode<E>(1);//æ ¹èŠ‚ç‚¹ä¸º1 
+	binaryTreeNode<E>* a[n*2];//æŒ‰ç¼–å·å­˜æ”¾èŠ‚ç‚¹ 
+	a[0]=root;//æ ¹èŠ‚ç‚¹æ”¾å…¥æ•°ç»„ 
 	treeSize++;
 	
 	for(int i=0;i<n;i++)
 	{
-		E left,right;//×óÓÒº¢×ÓµÄÊıÖµ 
+		E left,right;//å·¦å³å­©å­çš„æ•°å€¼ 
 		cin>>left>>right;
 		
 		binaryTreeNode<E> *t=a[i];
@@ -202,7 +202,7 @@ void linkedBinaryTree<E>::createTree()//´´½¨Ê÷
 }
 
 template<class E>
-void linkedBinaryTree<E>::size()//Êä³ö¸÷×ÓÊ÷´óĞ¡ 
+void linkedBinaryTree<E>::size()//è¾“å‡ºå„å­æ ‘å¤§å° 
 {
 	sizeArray=new int[treeSize];
 	arrayQueue<binaryTreeNode<E>*> q;
@@ -210,7 +210,7 @@ void linkedBinaryTree<E>::size()//Êä³ö¸÷×ÓÊ÷´óĞ¡
 	
 	while(t!=NULL)
 	{
-		sizeArray[t->element-1]=size(t);//¼ÆËãÒÔ¸Ã½ÚµãÎª¸ùµÄ×ÓÊ÷´óĞ¡£¬·ÅÈë±àºÅ¶ÔÓ¦µÄÊı×éÎ»ÖÃ 
+		sizeArray[t->element-1]=size(t);//è®¡ç®—ä»¥è¯¥èŠ‚ç‚¹ä¸ºæ ¹çš„å­æ ‘å¤§å°ï¼Œæ”¾å…¥ç¼–å·å¯¹åº”çš„æ•°ç»„ä½ç½® 
 	
 		if(t->leftChild!=NULL)
 		{
@@ -230,7 +230,7 @@ void linkedBinaryTree<E>::size()//Êä³ö¸÷×ÓÊ÷´óĞ¡
 		q.pop();
 	}
 	
-	for(int i=0;i<treeSize;i++)//°´±àºÅÊä³ö¸÷×ÓÊ÷´óĞ¡ 
+	for(int i=0;i<treeSize;i++)//æŒ‰ç¼–å·è¾“å‡ºå„å­æ ‘å¤§å° 
 	{
 		cout<<sizeArray[i]<<" ";
 	}
@@ -239,17 +239,17 @@ void linkedBinaryTree<E>::size()//Êä³ö¸÷×ÓÊ÷´óĞ¡
 }
 
 template<class E>
-int linkedBinaryTree<E>::size(binaryTreeNode<E> *t)//µİ¹é¼ÆËã¸÷×ÓÊ÷´óĞ¡ 
+int linkedBinaryTree<E>::size(binaryTreeNode<E> *t)//é€’å½’è®¡ç®—å„å­æ ‘å¤§å° 
 {
-	if(t==NULL)//Ã»ÓĞ½Úµã 
+	if(t==NULL)//æ²¡æœ‰èŠ‚ç‚¹ 
 	{
 		return 0;
 	}
-	return size(t->leftChild)+size(t->rightChild)+1;//×óº¢×Ó¸öÊı+ÓÒº¢×Ó¸öÊı+¸ù½Úµã 
+	return size(t->leftChild)+size(t->rightChild)+1;//å·¦å­©å­ä¸ªæ•°+å³å­©å­ä¸ªæ•°+æ ¹èŠ‚ç‚¹ 
 }
 
 template<class E>
-void linkedBinaryTree<E>::height()//Êä³ö¸÷×ÓÊ÷¸ß¶È 
+void linkedBinaryTree<E>::height()//è¾“å‡ºå„å­æ ‘é«˜åº¦ 
 {
 	heightArray=new int[treeSize];
 	arrayQueue<binaryTreeNode<E>*> q;
@@ -286,15 +286,15 @@ void linkedBinaryTree<E>::height()//Êä³ö¸÷×ÓÊ÷¸ß¶È
 }
 
 template<class E>
-int linkedBinaryTree<E>::height(binaryTreeNode<E> *t)//¼ÆËã×ÓÊ÷¸ß¶È 
+int linkedBinaryTree<E>::height(binaryTreeNode<E> *t)//è®¡ç®—å­æ ‘é«˜åº¦ 
 {
-	if(t==NULL)//Ã»ÓĞ½Úµã 
+	if(t==NULL)//æ²¡æœ‰èŠ‚ç‚¹ 
 	{
 		return 0;
 	}
 	
-	int hl=height(t->leftChild);//×ó×ÓÊ÷¸ß¶È 
-	int hr=height(t->rightChild);//ÓÒ×ÓÊ÷¸ß¶È 
+	int hl=height(t->leftChild);//å·¦å­æ ‘é«˜åº¦ 
+	int hr=height(t->rightChild);//å³å­æ ‘é«˜åº¦ 
 	
 	if(hl>hr)
 	{
