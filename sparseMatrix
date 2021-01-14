@@ -1,0 +1,464 @@
+#include<iostream>
+using namespace std;
+
+template<class T>
+void changeLength(T*& element, int oldLength, int newLength)//倍增数组长度 
+{
+	T* temp = new T[newLength];//创建新长度的数组 
+
+	for (int i = 0;i < oldLength;i++)//把旧数组的元素复制到新数组
+		temp[i] = element[i];
+	delete[]element;//释放旧数组的空间 
+	element = temp;
+}
+
+template<class T>
+class arrayList
+{
+public:
+	arrayList(int initialCapacity = 10);
+	~arrayList() { delete[]element; }
+
+	int indexOf(const T& theElement)const;//获取索引 
+	void insert(int theIndex, const T& theElement);//插入 
+	void erase(int theIndex);//删除 
+	void output();//输出 
+	int size()const { return listSize; }//返回元素个数
+
+	void reset(int newSize);//把数组的元素个数改为newSize
+	void set(int theIndex, const T& theElement) { element[theIndex] = theElement; }//修改元素值
+	void clear(){ listSize = 0; }//使表的元素个数为0
+	T& get(int theIndex) { return element[theIndex]; }//获取matrixTerm的值
+
+	class iterator;//数组迭代器 
+	iterator begin() { return iterator(element); }
+	iterator end() { return iterator(element + listSize); }
+private:
+	T* element;
+	int listSize;//线性表长度
+	int arrayLength;//数组容量 
+};
+
+template<class T>
+class arrayList<T>::iterator
+{
+public:
+	typedef bidirectional_iterator_tag iterator_category;
+	typedef T value_type;
+	typedef ptrdiff_t difference_type;
+	typedef T* pointer;
+	typedef T& reference;
+
+	iterator(T* thePosition) { position = thePosition; }
+
+	T& operator*()const { return *position; }
+	T* operator->()const { return &*position; }
+
+	iterator& operator++()
+	{
+		++position;return *this;
+	}
+	iterator operator++(int)
+	{
+		iterator old = *this;
+		++position;
+		return old;
+	}
+
+	iterator& operator--()
+	{
+		--position;return *this;
+	}
+	iterator operator--(int)
+	{
+		iterator old = *this;
+		--position;
+		return old;
+	}
+
+	bool operator!=(const iterator right)const
+	{
+		return position != right.position;
+	}
+	bool operator==(const iterator right)const
+	{
+		return position == right.position;
+	}
+protected:
+	T* position;
+};
+
+template<class T>
+arrayList<T>::arrayList(int initialCapacity)
+{
+	arrayLength = initialCapacity;
+	element = new T[arrayLength];
+	listSize = 0;//初始时没有元素 
+}
+
+template<class T>
+int arrayList<T>::indexOf(const T& theElement)const
+{
+	for (int i = 0;i < listSize;i++)
+		if (element[i] == theElement)
+			return i;
+	return -1;//没有找到元素 
+}
+
+template<class T>
+void arrayList<T>::insert(int theIndex, const T& theElement)
+{
+	if (listSize == arrayLength)//数组已满时倍增数组 
+	{
+		changeLength<T>(element, arrayLength, arrayLength * 2);
+		arrayLength *= 2;
+	}
+	for (int i = listSize - 1;i >= theIndex;i--)
+		element[i + 1] = element[i];
+	element[theIndex] = theElement;
+	listSize++;//线性表长度+1 
+}
+
+template<class T>
+void arrayList<T>::erase(int theIndex)
+{
+	for (int i = theIndex;i < listSize - 1;i++)
+		element[i] = element[i + 1];
+	element[--listSize].~T();//线性表长度-1	
+}
+
+template<class T>
+void arrayList<T>::output()
+{
+	for (int i = 0;i < listSize;i++)
+		cout << element[i] << " ";
+	cout << endl;
+}
+
+template<class T>
+void arrayList<T>::reset(int newSize)
+{
+	if (newSize > arrayLength)
+	{
+		changeLength<T>(element, arrayLength, newSize);//把新的线性表的数组容量设为newSize
+		arrayLength = newSize;
+	}
+		
+	listSize = newSize;
+}
+
+template<class T>
+struct matrixTerm//矩阵三元组
+{
+	int row, col;//行，列
+	int value;//元素值
+};
+
+template<class T>
+class sparseMatrix//稀疏矩阵
+{
+public:
+	sparseMatrix(int theRows = 0, int theCols = 0) { rows = theRows;cols = theCols; }
+
+	void transpose();//转置
+	void add(sparseMatrix<T>& b);//加法
+	void multiply(sparseMatrix<T>& b);//乘法
+	void renew();//重置矩阵
+	void output();//输出
+	void initial();//初始化矩阵
+
+	sparseMatrix<T>& operator =(sparseMatrix<T>&);
+private:
+	int rows, cols;//行数，列数
+	arrayList<matrixTerm<T> > terms;//非0项表
+};
+
+template<class T>
+sparseMatrix<T>& sparseMatrix<T>::operator =(sparseMatrix<T>& b)
+{
+	rows = b.rows;
+	cols = b.cols;
+	terms.clear();//清空当前矩阵，存放新值
+
+	int size = 0;
+	typename arrayList<matrixTerm<T> >::iterator i = b.terms.begin();
+	for (;i != b.terms.end();i++)
+		terms.insert(size++, *i);
+	return *this;
+}
+
+template<class T>
+void sparseMatrix<T>::transpose()//转置
+{
+	sparseMatrix<T> b;//转置后的矩阵
+	b.rows = cols;
+	b.cols = rows;
+	b.terms.reset(terms.size());
+
+	int* colSize = new int[cols + 1];//原矩阵每一列的非0元素个数
+	int* rowNext = new int[cols + 1];//转置后每一行的首个非0元素的索引
+
+	for (int i = 1;i <= cols;i++)//初始化
+		colSize[i] = 0;
+	for (typename arrayList<matrixTerm<T> >::iterator i = terms.begin();i != terms.end();i++)
+		colSize[(*i).col]++;
+
+	rowNext[1] = 0;//第一行首个非0元素的索引必为0
+	for (int i = 2;i <= cols;i++)
+		rowNext[i] = rowNext[i - 1] + colSize[i - 1];
+
+	//转置
+	matrixTerm<T> mTerm;
+	for (typename arrayList<matrixTerm<T> >::iterator i = terms.begin();i != terms.end();i++)
+	{
+		int j = rowNext[(*i).col]++;
+
+		mTerm.row = (*i).col;
+		mTerm.col = (*i).row;
+		mTerm.value = (*i).value;
+		b.terms.set(j, mTerm);
+	}
+	*this = b;
+	delete[]colSize;
+	delete[]rowNext;
+}
+
+template<class T>
+void sparseMatrix<T>::add(sparseMatrix<T>& b)//加法
+{
+	if (rows != b.rows || cols != b.cols)//矩阵不相容
+	{
+		*this = b;
+		cout << -1 << endl;
+	}
+	else
+	{
+		sparseMatrix<T> c(rows, cols);//相加的结果矩阵
+		int cSize = 0;//记录c的非0元素个数
+
+		typename arrayList<matrixTerm<T> >::iterator it = terms.begin();
+		typename arrayList<matrixTerm<T> >::iterator ib = b.terms.begin();
+		typename arrayList<matrixTerm<T> >::iterator itEnd = terms.end();
+		typename arrayList<matrixTerm<T> >::iterator ibEnd = b.terms.end();
+
+		//加法
+		while (it != itEnd && ib != ibEnd)
+		{
+			//行主索引
+			int tIndex = (*it).row * cols + (*it).col;
+			int bIndex = (*ib).row * b.cols + (*ib).col;
+
+			if (tIndex < bIndex)//b项在后，先插入当前矩阵的项
+			{
+				c.terms.insert(cSize++, *it);
+				it++;
+			}
+			else if (tIndex == bIndex)//两项在同一个位置
+			{
+				if ((*it).value + (*ib).value != 0)//若相加后为0则不插入c
+				{
+					matrixTerm<T> mTerm;
+					mTerm.col = (*it).col;
+					mTerm.row = (*it).row;
+					mTerm.value = (*it).value + (*ib).value;
+
+					c.terms.insert(cSize++, mTerm);
+				}
+				it++;
+				ib++;
+			}
+			else
+			{
+				c.terms.insert(cSize++, *ib);
+				ib++;
+			}
+		}
+		//插入剩余项
+		while (it != terms.end())
+		{
+			c.terms.insert(cSize++, *it);
+			it++;
+		}
+		while (ib != b.terms.end())
+		{
+			c.terms.insert(cSize++, *ib);
+			ib++;
+		}
+		*this = c;
+	}
+}
+
+template<class T>
+void sparseMatrix<T>::multiply(sparseMatrix<T>& b)//乘法
+{
+	if (cols != b.rows)//矩阵不能相乘
+	{
+		*this = b;
+		cout << -1 << endl;
+	}
+	else
+	{
+		sparseMatrix<T> c(rows, b.cols);//相乘的结果矩阵
+		typename arrayList<matrixTerm<T> >::iterator it = terms.begin();
+		int* t_rowSize = new int[rows + 1];//当前矩阵的每一行的非0元素个数
+		int* b_rowSize = new int[b.rows + 1];//b矩阵的每一行的非0元素个数
+		int* rowNext = new int[b.rows + 1];//b矩阵每一行首个非0元素的索引
+		int cSize = 0, i = 1,count=0;
+		T* sum = new T[b.cols + 1];//存放c矩阵第(*it).row行的每一列的元素值
+
+		//初始化
+		for (int j = 1;j <= rows;j++)
+			t_rowSize[j] = 0;
+		for (int j = 1;j <= b.rows;j++)
+			b_rowSize[j] = 0;
+		for (int j = 1;j <= b.cols;j++)
+			sum[j] = 0;
+
+		for (typename arrayList<matrixTerm<T> >::iterator t = terms.begin();t != terms.end();t++)
+			t_rowSize[(*t).row]++;
+		for (typename arrayList<matrixTerm<T> >::iterator ib = b.terms.begin();ib != b.terms.end();ib++)
+			b_rowSize[(*ib).row]++;
+		
+		rowNext[1] = 0;
+		for (int j = 2;j <= b.rows;j++)
+			rowNext[j] = rowNext[j - 1] + b_rowSize[j - 1];
+
+		//乘法
+		for (;it!=terms.end();it++)
+		{
+			int theIndex = rowNext[(*it).col];//b矩阵非0元素的索引
+			//对当前矩阵的it项，计算其与b矩阵中第(*it).col行元素的乘积
+			for (int j = 0;j < b_rowSize[(*it).col];j++)
+			{
+				sum[b.terms.get(theIndex).col] += (*it).value * b.terms.get(theIndex).value;
+				theIndex++;
+			}
+				
+			count++;//记录当前矩阵的it是其所在行的第几个非0元素
+			//当前矩阵一行计算结束时，即得到c矩阵的一行，把sum中的值插入c中
+			if (i<=rows&&count == t_rowSize[i])
+			{
+				for (int k = 1;k <= b.cols;k++)
+					if (sum[k])//只有非0元素可以插入c中
+					{
+						matrixTerm<T> mTerm;
+						mTerm.row = (*it).row;
+						mTerm.col = k;
+						mTerm.value = sum[k];
+						c.terms.insert(cSize++, mTerm);
+						sum[k] = 0;//把sum中的值置0，用于下一行的计算
+					}
+				i++;//行数+1
+				count = 0;
+			}
+		}
+		delete[]t_rowSize;
+		delete[]b_rowSize;
+		delete[]rowNext;
+		*this = c;
+	}
+}
+
+template<class T>
+void sparseMatrix<T>::renew()//重置
+{
+	int size = 0;//记录当前矩阵非0元素个数
+
+	cin >> rows >> cols;
+	terms.clear();//清空当前矩阵，存放新值
+	for (int i = 1;i <= rows;i++)
+		for (int j = 1;j <= cols;j++)
+		{
+			int x;
+
+			cin >> x;
+			if (x)//只存放非0元素
+			{
+				matrixTerm<T> mTerm;
+				mTerm.row = i;
+				mTerm.col = j;
+				mTerm.value = x;
+				terms.insert(size++, mTerm);
+			}
+		}
+}
+
+template<class T>
+void sparseMatrix<T>::output()//输出
+{
+	typename arrayList<matrixTerm<T> >::iterator i = terms.begin();
+
+	cout << rows << " " << cols << endl;
+	for (int k = 1;k <= rows;k++)
+	{
+		for (int j = 1;j <= cols;j++)
+		{
+			if (i != terms.end() && k == (*i).row && j == (*i).col)
+			{
+				cout << (*i).value << " ";
+				i++;
+			}
+			else
+				cout << 0 << " ";
+		}
+		cout << endl;
+	}
+}
+
+template<class T>
+void sparseMatrix<T>::initial()//加法和乘法时初始化右边的矩阵
+{
+	int t;
+
+	cin >> rows >> cols >> t;
+	for (int i = 0;i < t;i++)
+	{
+		matrixTerm<T> mTerm;
+
+		cin >> mTerm.row >> mTerm.col >> mTerm.value;
+		terms.insert(i, mTerm);
+	}
+}
+
+int main()
+{
+	int n;//操作数个数
+	sparseMatrix<int> p;
+
+	cin >> n;
+	for (int i = 0;i < n;i++)
+	{
+		int m;//操作数
+
+		cin >> m;
+		switch (m)
+		{
+		case 1://重置矩阵
+			p.renew();
+			break;
+		case 2://矩阵乘法
+		{
+			sparseMatrix<int> b;
+
+			b.initial();
+			p.multiply(b);
+			break;
+		}
+		case 3://矩阵加法
+		{
+			sparseMatrix<int> b;
+
+			b.initial();
+			p.add(b);
+			break;
+		}
+		case 4://输出矩阵
+			p.output();
+			break;
+		case 5://矩阵转置
+			p.transpose();
+			break;
+		}
+	}
+	return 0;
+}
